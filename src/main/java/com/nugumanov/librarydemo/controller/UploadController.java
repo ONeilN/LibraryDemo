@@ -1,5 +1,8 @@
-package com.nugumanov.librarydemo;
+package com.nugumanov.librarydemo.controller;
 
+import com.nugumanov.librarydemo.domain.Image;
+import com.nugumanov.librarydemo.repos.ImageRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,9 @@ import java.io.IOException;
 @Controller
 public class UploadController {
 
+    @Autowired
+    private ImageRepo imageRepo;
+
     @Value("/images")
     private String uploadPath;
 
@@ -27,6 +33,9 @@ public class UploadController {
             @RequestParam("file") MultipartFile file,
             Model model
     ) throws IOException {
+
+        Image image = new Image();
+
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
@@ -37,7 +46,15 @@ public class UploadController {
             String resultFileName = "Haar." + file.getOriginalFilename();
 
             file.transferTo(new File(uploadPath + "/" + resultFileName));
+
+            image.setFileName(resultFileName);
         }
+
+        imageRepo.save(image);
+
+        Iterable<Image> images = imageRepo.findAll();
+
+        model.addAttribute("images", images);
 
         return "upload";
     }
