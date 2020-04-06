@@ -9,12 +9,14 @@
 <h1>Вейвлет преобразование изображений</h1>
 <div>
     <form method="POST" enctype="multipart/form-data" action="/">
-        <table>
-            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-        </table>
+        <div id="chimg">
+            Выберите изображение: <input type="file" name="file" />
+        </div>
+        <div id="upload">
+            <input type="submit" value="Upload" />
+        </div>
     </form>
-    <div>
+    <div id="img">
         <img th:src="${filename}" th:unless="${filename == null}" alt="">
     </div>
 </div>
