@@ -1,8 +1,5 @@
 package com.nugumanov.librarydemo.controller;
 
-import com.nugumanov.librarydemo.domain.Image;
-import com.nugumanov.librarydemo.repos.ImageRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +10,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 public class UploadController {
 
-    @Autowired
-    private ImageRepo imageRepo;
-
-    @Value("/images")
+    @Value("${upload.path}")
     private String uploadPath;
 
     @GetMapping("/")
@@ -34,27 +29,21 @@ public class UploadController {
             Model model
     ) throws IOException {
 
-        Image image = new Image();
-
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                uploadDir.mkdirs();
             }
 
-            String resultFileName = "Haar." + file.getOriginalFilename();
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + "Haar." + file.getOriginalFilename();
 
             file.transferTo(new File(uploadPath + "/" + resultFileName));
 
-            image.setFileName(resultFileName);
+            String filename = "/img/" + resultFileName;
+            model.addAttribute("filename", filename);
         }
-
-        imageRepo.save(image);
-
-        Iterable<Image> images = imageRepo.findAll();
-
-        model.addAttribute("images", images);
 
         return "upload";
     }

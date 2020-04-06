@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Wavelet</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{style.css}">
 </head>
 <body>
 <h1>Вейвлет преобразование изображений</h1>
@@ -13,7 +14,9 @@
             <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
         </table>
     </form>
-    <img src="/images/Haar.screen1.PNG" alt="">
+    <div>
+        <img th:src="${filename}" th:unless="${filename == null}" alt="">
+    </div>
 </div>
 </form>
 </body>
