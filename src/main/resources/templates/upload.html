@@ -10,14 +10,17 @@
 <div>
     <form method="POST" enctype="multipart/form-data" action="/">
         <div id="chimg">
-            Выберите изображение: <input type="file" name="file" />
+            Выберите изображение: <input type="file" name="file"/>
+        </div>
+        <div>
+            <label><input type="checkbox" name="confirm1" th:checked="*{confirm1}" />Обратное преобразование</label>
         </div>
         <div id="upload">
             <input type="submit" value="Upload" />
         </div>
     </form>
-    <div id="img">
-        <img th:src="${filename}" th:unless="${filename == null}" alt="">
+    <div>
+        <img id="img" th:src="${filename}" th:unless="${filename == null}" alt="">
     </div>
 </div>
 </form>
