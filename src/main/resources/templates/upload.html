@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
     <title>Wavelet</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,15 +12,20 @@
         <div id="chimg">
             Выберите изображение: <input type="file" name="file"/>
         </div>
-        <div>
-            <label><input type="checkbox" name="confirm1" th:checked="*{confirm1}" />Обратное преобразование</label>
+        <div id="checkbox">
+            <label><input type="checkbox" name="reverse" th:checked="*{reverse}" />Обратное преобразование</label>
         </div>
         <div id="upload">
-            <input type="submit" value="Upload" />
+            <input type="submit" th:name="transform" value="Преобразовать" />
+            <input type="submit" th:name="clear" value="Очистить" />
         </div>
     </form>
-    <div>
-        <img id="img" th:src="${filename}" th:unless="${filename == null}" alt="">
+    <div th:each="image : ${images}">
+        <form method="post" th:object="${image}">
+            <input type="submit" th:name="delete" value="Удалить" />
+            <input type="hidden">
+        </form>
+        <img id="img" th:src="${image.getFilename()}" th:unless="${image.getFilename() == null}" alt="">
     </div>
 </div>
 </form>

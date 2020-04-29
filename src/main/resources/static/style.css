@@ -7,12 +7,19 @@ h1 {
     text-align: center;
 }
 
+#checkbox {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
 #upload {
     width: 100%;
     text-align: center;
-    padding: 10px;
+    margin-top: 10px;
 }
 #img {
     width: 100%;
     text-align: center;
+    margin-top: 10px;
 }
